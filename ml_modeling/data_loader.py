@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 """ This module contains the function to load the data from the csv/pkl files. 
 The function reads the config.yaml file to get the paths of the data files and returns the data as pandas dataframes. 
 The function is called in the modelling notebook to load the required data before preprocessing and modeling."""
-=======
-""" This module contains the function to load the data from the csv files. 
-The function reads the config.yaml file to get the paths of the csv files and returns the data as pandas dataframes. 
-The function is called in the analysis notebooks to load the required data before preprocessing and modeling."""
->>>>>>> 77d6b9043a0a3cb4019669c01719ae7d7cda2165
 
 import yaml
 import pandas as pd
@@ -17,11 +11,7 @@ base_dir = Path(__file__).resolve().parent
 config_path = base_dir.parent / "config.yaml"
 def load_data(config_path=config_path, combined=False):
     """
-<<<<<<< HEAD
     Load the data from the csv/pkl files specified in the config.yaml file.
-=======
-    Load the data from the csv files specified in the config.yaml file.
->>>>>>> 77d6b9043a0a3cb4019669c01719ae7d7cda2165
 
     Parameters:
     config_path (str): The path to the config.yaml file. Default is 'config.yaml'
