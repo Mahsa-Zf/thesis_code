@@ -13,27 +13,23 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
 
-def _evaluate_model(model, preprocessors, datasets:dict, target):
+def _evaluate_model(model, preprocessor, datasets:dict, target):
     """Evaluates a given model using cross-validation on multiple datasets with different preprocessing steps.
     Parameters:
         model: The machine learning model to be evaluated (e.g., RandomForestClassifier, LogisticRegression, DecisionTreeClassifier).
-        preprocessors: A list of two preprocessing pipelines corresponding to clinical and non-clinical datasets, the order is 
-        [clinical_preprocessor, non_clinical_preprocessor].
+        preprocessor: The preprocessing pipeline to be applied to the datasets.
         datasets: A dictionary where keys are dataset names and values are the feature DataFrames.
         target: The target variable (labels) for the classification task.
     Returns:
         A DataFrame containing the mean and standard deviation of the evaluation metrics for each dataset.
     """
     pipeline= Pipeline(steps=[
-    ('preprocessor', preprocessors[0]),
+    ('preprocessor', preprocessor),
     ('classifier', model)
     ])
     columns = {}
     for dataset_name, X in datasets.items():
-        if dataset_name == 'Clinical':
-            pass
-        else:
-            pipeline.set_params(preprocessor=preprocessors[1])
+
         # Fit the pipeline on the training data using cross-validation, 
         # we also want to see the preformance on each fold, so we set return_train_score to True
         cv_scores = cross_validate(pipeline, X, target, cv=5, 
@@ -53,11 +49,10 @@ def _evaluate_model(model, preprocessors, datasets:dict, target):
     return results_df
 
 
-def result_viewer(preprocessors, datasets, y):
+def result_viewer(preprocessor, datasets, y):
     """Evaluates multiple machine learning models using the `_evaluate_model` function and prints the results in a readable format.
     Parameters:
-        preprocessors: A list of two preprocessing pipelines corresponding to clinical and non-clinical datasets, the order is 
-        [clinical_preprocessor, non_clinical_preprocessor].
+        preprocessor: The preprocessing pipeline to be applied to the datasets.
         datasets: A dictionary where keys are dataset names and values are the feature DataFrames.
         y: The target variable (labels) for the classification task.
         Returns:
@@ -69,7 +64,7 @@ def result_viewer(preprocessors, datasets, y):
                                  DecisionTreeClassifier(random_state=42, max_depth=2),
                                 RandomForestClassifier(random_state=42,max_depth=2)]):
         
-        results = _evaluate_model(model, preprocessors, datasets, y)
+        results = _evaluate_model(model, preprocessor, datasets, y)
         all_results[model_name] = results
 
     for key in all_results.keys():
