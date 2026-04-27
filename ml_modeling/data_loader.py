@@ -47,7 +47,7 @@ def load_data(config_path=config_path, survival_analysis_data=False):
     os_cols = ['tr_car_inf_date','surv_date', 'surv_status']
     os_targets = clinical[os_cols]
 
-    pfs_cols = ['surv_prog_date', 'tr_car_inf_date', 'surv_date']
+    pfs_cols = ['surv_prog_date', 'tr_car_inf_date', 'surv_date', 'surv_status']
     pfs_targets = clinical[pfs_cols]
 
     # We now can drop the target variables from the dataset
