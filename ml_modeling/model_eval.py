@@ -9,6 +9,7 @@ and prints the results in a readable format.
 from sklearn.model_selection import cross_validate
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
+from sklearn.feature_selection import SelectKBest, mutual_info_classif
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
@@ -25,6 +26,7 @@ def _evaluate_model(model, preprocessor, datasets:dict, target):
     """
     pipeline= Pipeline(steps=[
     ('preprocessor', preprocessor),
+    ('kbest', SelectKBest(k=10, score_func = mutual_info_classif, random_state=42)),
     ('classifier', model)
     ])
     columns = {}
