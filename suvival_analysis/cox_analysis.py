@@ -31,12 +31,11 @@ def cox_univariate_analysis(X, T_col='T', E_col='E', var_threshold=0.1):
     """
     # Select radiomic features (exclude T, E)
     radiomic_features = [col for col in X.columns if col not in [T_col, E_col]]
-    
-    results = []
-    X_scaled = X.copy()
+
     results = []
     X_scaled = X.copy()
     for feature in radiomic_features:
+        # some feautures in clinical data are categorical, we need to convert them to numeric before fitting the Cox model
         if X[feature].dtype not in [float, int]:
             X[feature] = pd.to_numeric(X[feature], errors='raise')
         if X[feature].var() >= var_threshold:
