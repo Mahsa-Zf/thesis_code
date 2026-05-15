@@ -3,8 +3,12 @@
  The configuration for the directories is read from a 'config.yaml' file. """
 import yaml
 import pandas as pd
+from pathlib import Path
 
-with open('config.yaml', 'r') as file:
+# the config file is in the parent of parent of the current file, which is the root of the project
+base_dir = Path(__file__).resolve().parent.parent
+path = base_dir / "config.yaml"
+with open(path, 'r') as file:
     config = yaml.safe_load(file)
 
 def patient_table_concat(*directories, name='radiomic_data'):
@@ -23,7 +27,8 @@ def patient_table_concat(*directories, name='radiomic_data'):
     
     if all_tables:
         combined_table = pd.concat(all_tables, ignore_index=True)
-        combined_table.to_csv(f'combined_{name}.csv', index=False)
+        path_to_save = config[name]['combined']
+        combined_table.to_csv(path_to_save, index=False)
     else:
         print("No Excel files found in the provided directories.")
         return None
