@@ -7,7 +7,7 @@ in the specified save folder path.
 import pandas as pd
 import os
 
-def calculate_delta_radiomics(data_folder_path, save_folder_path, center_name):
+def calculate_delta_radiomics(data_folder_path, save_folder_path, center_name=''):
     """
     Reads radiomics data from subfolders (Time A and Time B), filters for 'suv2.5' 
     segmentation, calculates the delta (B - A) for numeric features, and stores
@@ -16,7 +16,8 @@ def calculate_delta_radiomics(data_folder_path, save_folder_path, center_name):
     Args:
         data_folder_path (str): The path to the main folder containing patient subfolders.
         save_folder_path (str): The path to the folder where the results will be saved.
-        center_name (str): The name of the center for which to calculate delta radiomics.
+        center_name (str) (optional): The name of the center for which to calculate delta radiomics. 
+        This will be prefixed to the patient ID in the resulting dictionaries. Default is an empty string.
     Returns:
         saves three Excel files in the specified save folder path:
             - Time_A_radiomics.xlsx: DataFrame with Time A radiomics features
@@ -84,11 +85,10 @@ def calculate_delta_radiomics(data_folder_path, save_folder_path, center_name):
                         
                 # Convert the resulting pandas Series into a standard Python dictionary
                 # and store it under the patient's ID
-                # dropna() to remove any features that resulted in NaN
-                pt_code = patient_folder_name + center_name
-                all_delta_radiomics[pt_code] = delta_radiomics.dropna().to_dict()
-                A_radiomics[pt_code] = numeric_A.dropna().to_dict()
-                B_radiomics[pt_code] = numeric_B.dropna().to_dict()
+                pt_code = center_name + patient_folder_name
+                all_delta_radiomics[pt_code] = delta_radiomics.to_dict()
+                A_radiomics[pt_code] = numeric_A.to_dict()
+                B_radiomics[pt_code] = numeric_B.to_dict()
                 print(pt_code, "processed successfully.")
             else:
                 print(f"Missing Time A or Time B file for {patient_folder_name}. Skipping this patient.")
@@ -100,5 +100,5 @@ def calculate_delta_radiomics(data_folder_path, save_folder_path, center_name):
 
     print("Delta radiomics calculation completed.")
 
-calculate_delta_radiomics(..., ..., ...)
+calculate_delta_radiomics(...,...,...)
 
