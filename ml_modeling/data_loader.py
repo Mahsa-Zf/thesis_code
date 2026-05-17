@@ -54,8 +54,7 @@ def load_data(config_path=config_path, survival_analysis_data=False):
     cols_drop = modelling_targets + os_cols + pfs_cols
     clinical.drop(columns=cols_drop, inplace=True)
 
-    if survival_analysis_data:
-        patients = pd.concat([
+    patients = pd.concat([
         clinical,
         radiomics_A.add_suffix('_A'),
         radiomics_B.add_suffix('_B'),
@@ -63,7 +62,10 @@ def load_data(config_path=config_path, survival_analysis_data=False):
     ], axis=1)
         # For survival analysis, we only keep the patients with complete data
         # (e.g. dropping PT umcg 129 because it is not present in all dataframes)
-        patients.dropna(inplace=True)
+    patients.dropna(inplace=True)
+    
+    if survival_analysis_data:
+
         return patients, os_targets, pfs_targets
     
     else:
@@ -76,6 +78,6 @@ def load_data(config_path=config_path, survival_analysis_data=False):
         X_clinical_B = clinical.join(radiomics_B, how='inner')
         X_clinical_Delta = clinical.join(radiomics_delta, how='inner')
             
-        return clinical, X_clinical_A, X_clinical_B, X_clinical_Delta, targets
+        return patients, clinical, X_clinical_A, X_clinical_B, X_clinical_Delta, targets
 
 

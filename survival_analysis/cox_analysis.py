@@ -23,7 +23,7 @@ def cox_univariate_analysis(X, T_col='T', E_col='E', var_threshold=0.1):
         Event column name
     var_threshold : float, default=0.1
         Minimum variance threshold for feature selection
-    
+
     Returns:
     --------
     pd.DataFrame
@@ -40,7 +40,6 @@ def cox_univariate_analysis(X, T_col='T', E_col='E', var_threshold=0.1):
             X[feature] = pd.to_numeric(X[feature], errors='raise')
         if X[feature].var() >= var_threshold:
             try:
-                print(f"Analyzing feature: {feature}")
                 # Scale feature
                 scaler = StandardScaler()
                 cph = CoxPHFitter()
@@ -55,20 +54,11 @@ def cox_univariate_analysis(X, T_col='T', E_col='E', var_threshold=0.1):
                 
                 # test proportional hazards assumption only for significant features
                 if summary.loc[feature, 'p'] <= 0.05:
-                    # temporarily capture stderr so we don't see standard messages
-                    sio = StringIO()
-                    with warnings.catch_warnings(), redirect_stderr(sio):
-                        warnings.simplefilter("always")  # show all warnings
                         cph.check_assumptions(
                             X_scaled[[feature, T_col, E_col]],
                             p_value_threshold=0.05,
                             show_plots=False
                         )
-                    # print only lines that mention “PH” or “violation”:
-                    text = sio.getvalue()
-                    if "proportional" in text.lower() or "violation" in text.lower():
-                        print(f"\n[PH Warning] Feature '{feature}':\n{text}")
-                    
 
                 results.append({
                     'feature': feature,
