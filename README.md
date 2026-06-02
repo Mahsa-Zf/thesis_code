@@ -145,7 +145,7 @@ jupyter notebook
 Navigate into the relevant module folder and open the notebooks in order. A typical end-to-end workflow follows this sequence:
 
 ```
-EDA → imaging_information_extraction → ml_modeling → survival_analysis
+imaging_information_extraction → EDA → ml_modeling → survival_analysis
 ```
 
 Each module is self-contained and can also be run independently if the required input data is available.
