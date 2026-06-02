@@ -9,8 +9,8 @@ A research codebase supporting my master's thesis on **Prognostic Value of Basel
 - [Overview](#overview)
 - [Project Structure](#project-structure)
 - [Modules](#modules)
-  - [EDA](#eda)
   - [Imaging Information Extraction](#imaging-information-extraction)
+  - [EDA](#eda)
   - [ML Modeling](#ml-modeling)
   - [Survival Analysis](#survival-analysis)
 - [Installation](#installation)
@@ -160,8 +160,7 @@ The full pinned environment is listed in `requirements.txt`. Key packages includ
 
 | Category | Libraries |
 |---|---|
-| Data handling | `pandas`, `numpy`'StudyDate', 'SeriesDescription', 'Modality', 'PatientID', 'StudyDescription', 
-           'AcquisitionDate' |
+| Data handling | `pandas`, `numpy` |
 | Medical imaging | `pydicom` |
 | Visualization | `matplotlib`, `seaborn` |
 | Machine learning | `scikit-learn`, `scipy`, `statsmodels` |
