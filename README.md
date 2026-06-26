@@ -87,9 +87,8 @@ The `ml_modeling/` folder contains notebooks and scripts for training and evalua
 - Model training: classification using `scikit-learn`
 - Model regularization
 - Model evaluation: cross-validation, ROC-AUC, F1-Score, Precision, Recall
-- Accelerated computation via `numba`
 
-**Key libraries:** `scikit-learn`, `pandas`, `numpy`, `numba`, `statsmodels`, `scipy`, `matplotlib`
+**Key libraries:** `scikit-learn`, `pandas`, `numpy`, `statsmodels`, `scipy`, `matplotlib`
 
 ---
 
