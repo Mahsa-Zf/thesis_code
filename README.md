@@ -42,8 +42,6 @@ thesis_code/
 ├── imaging_information_extraction/ # DICOM parsing and feature extraction
 ├── ml_modeling/                    # Machine learning model training & evaluation
 ├── survival_analysis/              # Survival analysis (Kaplan-Meier, Cox PH, etc.)
-│
-├── __init__.py                     # To facilitate importing scripts in a different folder
 ├── requirements.txt                # Full pinned dependency list
 ├── .gitignore
 ├── LICENSE                         # MIT
