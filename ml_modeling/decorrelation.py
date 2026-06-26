@@ -1,15 +1,17 @@
 """
-This module provides a function to remove highly correlated features from a DataFrame while ensuring that protected features are retained. 
+This module provides a function to remove highly correlated features from a DataFrame while ensuring that protected features 
+(traditional radiomic features) are retained. 
 The `keep_uncorrelated_features` function returns a new DataFrame containing only the uncorrelated features along with any non-numeric columns.
 The function works by first calculating the correlation matrix of the numeric features, then iteratively selecting features to keep based on 
 their correlation with already selected features. Protected features are always retained regardless of their correlation with other features.
 """
 import numpy as np
-import pandas as pd
 
 def keep_uncorrelated_features(df, threshold=0.9, protected_features=None):
     """
-    Removes features from the DataFrame that are highly correlated with each other, while ensuring that protected features are retained.
+    Removes features from the DataFrame that are highly correlated with each other,
+    while ensuring that protected features (traditional radiomic features) are retained.
+
     Parameters:
         df: The input DataFrame containing the features.
         threshold: The correlation threshold above which features are considered highly correlated.
@@ -40,6 +42,7 @@ def keep_uncorrelated_features(df, threshold=0.9, protected_features=None):
         if not is_correlated_with_kept(col):
             keep.append(col)
             kept_set.add(col)
-
+    # because the non-numeric columns are not included in the correlation matrix as it's not the
+    # appropriate approach for non-numeric data, we need to add them back to the final DataFrame
     non_numeric = [c for c in df.columns if c not in num_cols]
     return df[keep + non_numeric]
